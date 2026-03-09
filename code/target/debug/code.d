@@ -1,0 +1,1 @@
+/home/alexanderto/Documents/GitHub/Prosjekt_kortspill/code/target/debug/code: /home/alexanderto/Documents/GitHub/Prosjekt_kortspill/code/src/lib.rs /home/alexanderto/Documents/GitHub/Prosjekt_kortspill/code/src/main.rs
