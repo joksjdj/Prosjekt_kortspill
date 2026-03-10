@@ -1,5 +1,5 @@
 /*
-Downloading mysql
+Downloading mysql in bash
 
 sudo apt update
 sudo apt install mysql-server
@@ -7,9 +7,13 @@ sudo systemctl status mysql
 sudo mysql_secure_installation
 
 
+Type:
+
 sudo mysql -u root -p
 or
 sudo mysql
+
+to use mysql
 */
 
 SET GLOBAL validate_password.policy = LOW;
@@ -18,6 +22,10 @@ SET GLOBAL validate_password.length = 1;
 
 CREATE DATABASE card_game;
 
+/*
+test is a placeholder and can be changed.
+IDENTIFIED BY 'your_password'
+*/
 CREATE USER 'test'@'%' IDENTIFIED BY 'test';
 GRANT ALL PRIVILEGES ON card_game.* TO 'test'@'%';
 FLUSH PRIVILEGES;
@@ -33,7 +41,6 @@ CREATE TABLE active_games (
     placed_cards JSON,
     untouched_cards JSON
 );
-
 DESCRIBE active_games;
 
 CREATE TABLE players (
@@ -45,8 +52,8 @@ CREATE TABLE players (
     FOREIGN KEY (game_id) REFERENCES active_games(id),
     cards JSON
 );
-
 DESCRIBE players;
+
 
 DELIMITER $$
 
@@ -67,6 +74,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 
 DELIMITER $$
 
