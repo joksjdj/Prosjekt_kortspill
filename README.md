@@ -11,6 +11,7 @@ Dette er et prosjekt hvor spillerne kan spille en rekke kort spill.
 - Søk
 - Chat
 - Kansje tourtaments
+- Koble til en DB
 
 ## Setup:
 

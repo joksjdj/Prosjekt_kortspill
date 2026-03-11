@@ -73,7 +73,6 @@ DESCRIBE players;
 
 
 DELIMITER $$
-
 CREATE TRIGGER on_player_join
 BEFORE INSERT ON players
 FOR EACH ROW
@@ -89,12 +88,10 @@ BEGIN
     SET playing = playing + 1
     WHERE active_games.id = NEW.game_id;
 END$$
-
 DELIMITER ;
 
 
 DELIMITER $$
-
 CREATE TRIGGER on_player_leave
 BEFORE DELETE ON players
 FOR EACH ROW
@@ -103,7 +100,6 @@ BEGIN
     SET playing = playing - 1
     WHERE active_games.id = OLD.game_id;
 END$$
-
 DELIMITER ;
 
 
