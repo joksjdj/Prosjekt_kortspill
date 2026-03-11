@@ -1,18 +1,35 @@
 /*
 Downloading mysql in bash
 
-sudo apt update
-sudo apt install mysql-server
-sudo systemctl status mysql
-sudo mysql_secure_installation
+Update your package list to avoid installing an outdated version of mysql.
+    =========================================
+    sudo apt update
+    =========================================
 
+    =========================================
+    sudo apt install mysql-server
+    sudo mysql_secure_installation
+    =========================================
+or
+    =========================================
+    sudo apt install mariadb-server mariadb-client -y
+    =========================================
+depending on what OS you are using.
+
+
+Checking if mysql is running
+    =========================================
+    sudo systemctl status mysql
+    =========================================
 
 Type:
-
-sudo mysql -u root -p
+    =========================================
+    sudo mysql -u root -p
+    =========================================
 or
-sudo mysql
-
+    =========================================
+    sudo mysql
+    =========================================
 to use mysql
 */
 
@@ -88,3 +105,25 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+/* Test it */
+INSERT INTO active_games (lobby_name) VALUES ('test');
+SELECT * FROM active_games;
+/*
+It should show that there is 1 game with 0 players. Now we will add a player to the game and see if the player count increases.
+*/
+
+INSERT INTO players (name, ip_address, game_id) VALUES ('test', 'dwadwa', 1);
+SELECT * FROM players;
+SELECT * FROM active_games;
+/*
+It should show that there is 1 player row with the game_id of 1 and the player count in the active_games table should be 1.
+*/
+
+DELETE FROM players WHERE id = 1;
+SELECT * FROM players;
+SELECT * FROM active_games;
+/*
+It should show that there are no players and the player count in the active_games table should be 0.
+*/
