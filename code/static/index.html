@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Cards</title>
 </head>
 <body>
-    <main>
-        <h1>Active games</h1>
-        <div>
-            <header><search></search></header>
-            <div></div>
-        </div>
-    </main>
+    <h1>Lobbies</h1>
+    <div class="lobbies column">
+        <header class="border row" style="width: 100%; height: 50px; padding: 0%;">
+            <input class="border" placeholder=" Search" style="width: 25%; height: 100%; background: none;"></input>
+            <Button class="border" style="height: 100%;"><h2 style="margin: 0%;">Create lobby</h2></Button>
+        </header>
+        <main class="border" style="width: 100%; flex: 1;"></main>
+        <footer style="display: flex; justify-content: center;">
+            <div class="row">
+                <button><h1>&lt;</h1></button>
+                <h1>1</h1>
+                <button><h1>&gt;</h1></button>
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
 <style>
-html, body {
-    width: 100%;
-    height: 100%;
-    border: none;
-    margin: 0%;
-    padding: 0%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.lobbies {
+    width: 95%;
+    min-height: 500px;
 }
 </style>
