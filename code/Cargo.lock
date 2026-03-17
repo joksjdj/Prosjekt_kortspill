@@ -376,6 +376,8 @@ dependencies = [
  "actix-web",
  "dotenvy",
  "local-ip-address",
+ "serde",
+ "serde_json",
  "sqlx",
  "tokio",
 ]

@@ -16,9 +16,9 @@
         <main class="border" style="width: 100%; flex: 1;"></main>
         <footer style="display: flex; justify-content: center;">
             <div class="row">
-                <button><h1>&lt;</h1></button>
-                <h1>1</h1>
-                <button><h1>&gt;</h1></button>
+                <button onclick="activeGames(-1)"><h1 id="pageMinus">&lt;</h1></button>
+                <h1 id="pagenumber">1</h1>
+                <button onclick="activeGames(1)"><h1>&gt;</h1></button>
             </div>
         </footer>
     </div>
@@ -30,3 +30,30 @@
     min-height: 500px;
 }
 </style>
+<script defer>
+var page = 1;
+async function activeGames(pagemove) {
+    page += pagemove;
+    if (page < 2) {
+        document.getElementById("pageMinus").style.color = "gray";
+        if (page === 0) {
+            page = 1;
+            return;
+        }
+    } else {
+        document.getElementById("pageMinus").style.color = "white";
+    }
+    document.getElementById("pagenumber").innerText = page;
+    
+    await fetch(`/page/${page}/`)
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+}
+activeGames(0);
+</script>
