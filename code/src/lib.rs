@@ -1,41 +1,35 @@
-use std::env;
-use sqlx::{MySqlPool, query_as};
+use sqlx::{MySqlPool, query_as, mysql::MySqlPoolOptions, FromRow};
+
 use serde_json::Value;
-use sqlx::FromRow;
+
+use std::time::Instant;
 
 #[derive(Debug, FromRow)]
-struct ActiveGame {
+pub struct ActiveGame {
     id: i64,
     lobby_name: String,
-    lobby_password: Option<String>,
     playing: i64,
-    placed_cards: Option<Value>,
-    untouched_cards: Option<Value>,
 }
-pub async fn connect_db() -> Result<(), actix_web::Error> {
+
+pub async fn connect_db() -> Result<MySqlPool, sqlx::Error> {
+    let start = Instant::now();
     println!("connecting to db...");
-    dotenvy::dotenv().ok();
 
-    let database_url = env::var("DATABASE_URL")
-        .map_err(actix_web::error::ErrorInternalServerError)?;
+    let database_url = std::env::var("DATABASE_URL")
+        .expect("DATABASE_URL must be set");
 
-    println!("Existing .env: {}", database_url);
+    let pool = MySqlPoolOptions::new()
+        .max_connections(10)
+        .connect(&database_url)
+        .await?;
 
-    let pool = MySqlPool::connect(&database_url)
-        .await
-        .map_err(actix_web::error::ErrorInternalServerError)?;
-
+    println!(".env: {}", database_url);
     println!("Connected");
 
-    let rows = sqlx::query_as::<_, ActiveGame>(
-        "SELECT * FROM active_games LIMIT 5"
-    )
-        .fetch_all(&pool)
-        .await
-        .map_err(actix_web::error::ErrorInternalServerError)?;
+    let duration = start.elapsed();
+    let ms = (duration.as_secs_f64() * 1000.0).ceil() / 1000.0;
+    println!("Time elapsed: {:.3} ms\n", ms);
 
-    println!("Result: {:?}", rows);
-
-    Ok(())
+    Ok(pool)
     
 }
