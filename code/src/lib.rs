@@ -1,15 +1,10 @@
-use sqlx::{MySqlPool, query_as, mysql::MySqlPoolOptions, FromRow};
+use sqlx::{MySqlPool, mysql::MySqlPoolOptions, FromRow};
 
 use serde_json::Value;
 
 use std::time::Instant;
 
-#[derive(Debug, FromRow)]
-pub struct ActiveGame {
-    id: i64,
-    lobby_name: String,
-    playing: i64,
-}
+use serde::{Serialize, Deserialize};
 
 pub async fn connect_db() -> Result<MySqlPool, sqlx::Error> {
     let start = Instant::now();
@@ -32,4 +27,26 @@ pub async fn connect_db() -> Result<MySqlPool, sqlx::Error> {
 
     Ok(pool)
     
+}
+
+#[derive(Debug, FromRow, Serialize, Deserialize)]
+pub struct ActiveGame {
+    id: i64,
+    lobby_name: String,
+    playing: i64,
+}
+
+#[derive(Debug, FromRow, Serialize, Deserialize)]
+pub struct CurrentGame {
+    id: i64,
+    lobby_name: String,
+
+    #[serde(skip_serializing)]
+    lobby_password: Option<String>,
+
+    playing: i64,
+    placed_cards: Option<Value>,
+
+    #[serde(skip_serializing)]
+    untouched_cards: Option<Value>,
 }
